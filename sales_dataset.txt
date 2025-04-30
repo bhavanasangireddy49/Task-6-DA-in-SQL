@@ -1,0 +1,50 @@
+use example;
+CREATE TABLE orders (
+    order_id VARCHAR(10),
+    customer_id VARCHAR(10),
+    order_date DATE,
+    amount DECIMAL(10,2),
+    product_id VARCHAR(10),
+    quantity INT,
+    payment_method VARCHAR(50),
+    order_status VARCHAR(50)
+);
+INSERT INTO orders 
+(order_id, customer_id, order_date, amount, product_id, quantity, payment_method, order_status)
+VALUES
+('O01','C01','2025-04-15',320.50,'P123',3,'Credit Card','Delivered'),
+('O02','C02','2025-03-12',125.75,'P145',2,'PayPal','Shipped'),
+('O03','C03','2025-03-28',210.00,'P130',1,'Bank Transfer','Cancelled'),
+('O04','C04','2025-04-08',455.90,'P150',4,'Cash on Delivery','Delivered'),
+('O05','C05','2025-04-03',76.20,'P170',2,'PayPal','Pending'),
+('O06','C06','2025-04-05',299.99,'P140',1,'Credit Card','Shipped'),
+('O07','C07','2025-03-20',150.00,'P121',2,'PayPal','Delivered'),
+('O08','C08','2025-04-10',410.45,'P160',5,'Bank Transfer','Pending'),
+('O09','C09','2025-04-01',98.30,'P180',3,'Credit Card','Shipped'),
+('O10','C10','2025-03-30',240.00,'P125',1,'PayPal','Delivered'),
+('O11','C11','2025-04-13',330.00,'P115',3,'Bank Transfer','Shipped'),
+('O12','C12','2025-03-18',280.50,'P135',2,'Cash on Delivery','Cancelled'),
+('O13','C13','2025-04-06',410.75,'P155',4,'PayPal','Delivered'),
+('O14','C14','2025-03-26',97.50,'P175',2,'Bank Transfer','Pending'),
+('O15','C15','2025-04-09',410.00,'P110',5,'Credit Card','Delivered');
+SELECT
+  EXTRACT(YEAR FROM order_date) AS order_year,
+  EXTRACT(MONTH FROM order_date) AS order_month,
+  SUM(amount) AS total_revenue,
+  COUNT(DISTINCT order_id) AS total_orders
+FROM
+  orders
+WHERE
+  order_date BETWEEN '2025-03-01' AND '2025-04-30'
+GROUP BY
+  EXTRACT(YEAR FROM order_date),
+  EXTRACT(MONTH FROM order_date)
+ORDER BY
+  order_year,
+  order_month;
+
+
+
+       
+	
+
